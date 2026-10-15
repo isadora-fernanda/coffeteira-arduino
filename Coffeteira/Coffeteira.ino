@@ -5,10 +5,7 @@
 
    Máquina de Café
 
-   Acadêmicos:  Alisson
-                Isadora
-                Lucas
-                William
+   Trabalho desenvolvido em equipe
    =========================================================================== */
 // Inclusão das bibliotecas
 #include <LCD.h>
@@ -22,7 +19,7 @@
 // Para teste, descomentar a linha abaixo.
 //#define teste
 
-//Inicializa o display no endereco 0x27
+//Inicializa o display no endereço 0x27
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE); //ENDEREÇO DO I2C E DEMAIS INFORMAÇÕES
 
 RTC_DS3231 rtc;   // OBJETO DO TIPO RTC_DS3231
@@ -40,7 +37,7 @@ Thermistor sTpt(0);
 #define pulse (1<<PD3)      // Interrupção externa - pino 18
 // Definição dos pinos para o ultrassom
 #define echoPin 52          // define o pino D52 do Arduino como pino Echo do HC-SR04
-#define trigPin 53          // define o pino D53 do Arduino como pino Triger do HC-SR04
+#define trigPin 53          // define o pino D53 do Arduino como pino Trigger do HC-SR04
 // Definição dos pinos para a temperatura
 #define Sensor  A0          // define o pino A0 como entrada analógica para leitura da temperatura
 // Definição dos pinos para o sensor de peso
@@ -74,7 +71,7 @@ boolean  opcao_4 = 0x00;    // Intensidade do café (normal/forte) - Pino 33
 boolean  opcao_5 = 0x00;    // Ligar - Agora/Programado - Pino 34
 byte bt_press = 0;          // Variável para auxiliar na escolha da rotina
 
-// Relacionados ao PID (Os valores foram atribuidos de forma aleatória)
+// Relacionados ao PID (Os valores foram atribuídos de forma aleatória)
 #define __Kp 30     // Proportional constant
 #define __Ki 0.7    // Integral Constant
 #define __Kd 200    // Derivative Constant
@@ -88,18 +85,18 @@ byte tempAlvo;          // Temperatura alvo
 double temperatura = 0;         // Armazena a temperatura lida pelo sensor
 short full;                     // Define a distância em cm, a distância do sensor até o pó de café
 long duration;                  // Variável para duração que a onda de som viaja
-short distance = 00;            // Variável para medição da distancia
+short distance = 00;            // Variável para medição da distância
 boolean auxUltra;               // Variável auxiliar para a leitura da presença de café por meio do sensor de ultrassom
 
 boolean Programar   = 0x00;     // Variável auxiliar para escolher set do horário ou do alarme
-boolean select = 0x01;          // Varíavel que auxilia na escolha da intensidade do café
-short Intensidade = 1;          // Variável para identificação da intesidade do café (Normal - 1 | Forte - 2)
+boolean select = 0x01;          // Variável que auxilia na escolha da intensidade do café
+short Intensidade = 1;          // Variável para identificação da intensidade do café (Normal - 1 | Forte - 2)
 short Selecionar;               // Variável auxiliar para a escolha do preparo do café
 short cont;                     // Variável auxiliar
 float timerIN;                  // Variável que grava o tempo em que a Coffeteira ligou
-float timerOUT;                 // Variável que grava o tempo em que a água começou a ser aqucida
+float timerOUT;                 // Variável que grava o tempo em que a água começou a ser aquecida
 
-//Definições para o o fundo escuro
+//Definições para o fundo escuro
 short setLight_ini = 60;
 short setLight = setLight_ini;
 short backlight = 1;
@@ -114,13 +111,13 @@ ISR (INT2_vect)       // Vetor para interrupção externa 2
       opcao_1 = 0x01; // Irá incrementar a hora
       break;
     case 2:
-      opcao_2 = 0x01; // Irá incremetnar o minuto
+      opcao_2 = 0x01; // Irá incrementar o minuto
       break;
     case 3:
       opcao_3 = 0x01; // Habilita a programação do horário de preparo
       break;
     case 4:
-      opcao_4 = 0x01; // Altera a opção do café (noraml/forte)
+      opcao_4 = 0x01; // Altera a opção do café (normal/forte)
       break;
     case 5:
       opcao_5 = 0x01; // Prepara o café (Agora/Programado/Standby)
@@ -153,7 +150,7 @@ void setup()
   digitalWrite(trigPin, LOW);
   pinMode(echoPin, INPUT); // configura pino ECHO como entrada
 
-  // Condições inicias da Coffeteira
+  // Condições iniciais da Coffeteira
   full = 12;                        // Distância para a validação da existência de pó de café no filtro
   digitalWrite(Normal, HIGH);       // O Set da máquina é para fazer café normal
   select = 0x01;
@@ -182,7 +179,7 @@ void setup()
   //rtc.adjust(DateTime(2022, 04, 01, 14, 38, 00)); //(ANO), (MÊS), (DIA), (HORA), (MINUTOS), (SEGUNDOS)
 
   //---------------------------------PID-----------------------------------------
-  pid.begin();                  // Inicialize a instância PID
+  pid.begin();                  // Inicializa a instância do PID
   pid.tune(__Kp, __Ki, __Kd);   // Argumentos para o ajuste PID : kP, kI, kD
   pid.limit(0, 255);            // Os limites de saída do PID variam entre 0 e 255
   //-----------------------------------------------------------------------------
@@ -417,7 +414,7 @@ void PrepararCoffee(byte Ligado, byte Aguarda)
     temperatura = sTpt.getTemp();
 
     // Controle da temperatura (sTpt)
-    output = pid.compute(temperatura);      // Deixe o PID calcular o valor e retorna a saída ideal (0 a 255)
+    output = pid.compute(temperatura);      // O PID calcula o valor e retorna a saída ideal (0 a 255)
 #if defined(teste)
     Serial.print("Temperatura: ");
     Serial.println(temperatura);
@@ -431,7 +428,7 @@ void PrepararCoffee(byte Ligado, byte Aguarda)
     digitalWrite(Aguarda, HIGH);
   
   // Tempo escolhido para o preparo do café
-  if ( (timerIN - timerOUT) >= 10000 )      // O tempo escolhido foi de 10s para que a lógica pudesse ser apresentada em tempo hábil ao longo na aula
+  if ( (timerIN - timerOUT) >= 10000 )      // O tempo escolhido foi de 10s para que a lógica pudesse ser apresentada em tempo hábil ao longo da aula
   {
     reset();                                // Após o preparo do café, a Coffeteira é setada e fica em espera (standby)
   }
@@ -445,14 +442,14 @@ boolean readUltrasound(int dist)
   // SETA COMO NÍVEL BAIXO, trigPin
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
-  // SETA COMO NÍVEL ALTO (ACTIVE) POR 10 MICROSEGUNDOS
+  // SETA COMO NÍVEL ALTO (ACTIVE) POR 10 MICROSSEGUNDOS
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
-  // Le o echoPin, retorna o tempo de viagem da onda sonora em microssegundos
+  // Lê o echoPin, retorna o tempo de viagem da onda sonora em microssegundos
   duration = pulseIn(echoPin, HIGH);
   // CALCULA A DISTÂNCIA
-  distance = duration * 0.034 / 2; // VELOCIDADE DO SOM DIVIDIDO POR 2 (IDA E VOLTA)
+  distance = duration * 0.034 / 2; // VELOCIDADE DO SOM DIVIDIDA POR 2 (IDA E VOLTA)
 
   if (dist >= distance )
     return true;  // Retorna verdadeiro quando há café no recipiente
@@ -502,7 +499,7 @@ void bakclight()
     lcd.setBacklight(LOW);
     backlight = 0;
   }
-} // end bakclight
+} // end backlight
 // -----------------------------------------------------------------------------------------------------------------
 void reset()
 {

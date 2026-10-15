@@ -4,8 +4,6 @@ Protótipo de uma cafeteira programável com **Arduino Mega 2560**, com relógio
 
 > **English:** programmable coffee maker prototype built in a four-person team for the Embedded Systems course (UTFPR, 2022). Arduino Mega 2560 firmware with an RTC, PID water-temperature control through a solid-state relay, ultrasonic coffee-powder detection and an I2C LCD, plus schematic and PCB design in EasyEDA.
 
-![Protótipo montado na protoboard](docs/prototipo.jpg)
-
 ## Funcionalidades
 
 - **Relógio** com hora atual no LCD, mantida pelo módulo RTC DS3231
@@ -16,7 +14,28 @@ Protótipo de uma cafeteira programável com **Arduino Mega 2560**, com relógio
 - **Verificação de pó de café** pelo sensor ultrassônico HC-SR04 antes de iniciar o preparo, com indicação por LED
 - **Controle de temperatura PID**, com leitura de um termistor NTC e acionamento da resistência por PWM em um relé de estado sólido
 
-![Fluxograma de funcionamento](docs/fluxograma.png)
+### Fluxo de funcionamento
+
+```mermaid
+flowchart TD
+    A([Cafeteira energizada]) --> B[Em espera]
+    B --> C{Botão Ligar}
+    C -->|1º toque| B
+    C -->|2º toque| D[Preparar agora]
+    C -->|3º toque| E[Preparar no horário programado]
+    E --> F{Chegou o horário<br/>programado?}
+    F -->|Não| W[Aguarda]
+    W --> F
+    F -->|Sim| G
+    D --> G{Há pó de café<br/>no filtro?}
+    G -->|Não| H[Acende o LED de aviso]
+    H --> G
+    G -->|Sim| I[Aquece a água com controle PID<br/>normal: 60 °C, forte: 80 °C]
+    I --> J[Preparo de 10 s]
+    J --> B
+```
+
+*Fluxo do firmware. A intensidade do café, normal ou forte, é escolhida antes pelo botão de intensidade.*
 
 ## Hardware
 
@@ -32,6 +51,20 @@ Protótipo de uma cafeteira programável com **Arduino Mega 2560**, com relógio
 | Atuação | Relé de estado sólido SSR-40 DA para a resistência de aquecimento |
 
 O custo estimado de fabricação ficou em cerca de **R$ 188** por unidade, incluindo a placa de circuito impresso.
+
+### Placa de circuito impresso
+
+| Face 1 | Face 2 |
+|---|---|
+| ![Layout da PCB, face 1](docs/pcb-layout-1.png) | ![Layout da PCB, face 2](docs/pcb-layout-2.png) |
+
+*Layout da placa de duas faces feito no EasyEDA, no formato de shield para o Arduino Mega.*
+
+### Protótipo
+
+<img src="docs/prototipo.jpg" alt="Protótipo montado na protoboard" width="400">
+
+*Protótipo funcionando na protoboard, com o Arduino Mega, o relé de estado sólido, o RTC, o sensor ultrassônico, os botões e o LCD mostrando a hora.*
 
 ## Recursos de sistemas embarcados usados
 
