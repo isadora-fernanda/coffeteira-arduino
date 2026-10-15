@@ -1,6 +1,6 @@
 # Coffeteira, cafeteira programável com Arduino
 
-Protótipo de uma cafeteira programável com **Arduino Mega 2560**, com relógio de tempo real, programação de horário, escolha entre café normal e forte, **controle PID** da temperatura da água e **sensor ultrassônico** que verifica se há pó de café no filtro. O projeto inclui firmware, esquemático, placa de circuito impresso e manual do usuário. Foi desenvolvido em equipe de quatro integrantes na disciplina de Sistemas Embarcados do curso de Engenharia Eletrônica da UTFPR, em 2022.
+Protótipo de uma cafeteira programável com **Arduino Mega 2560**, com relógio de tempo real, programação de horário, escolha entre café normal e forte, **controle PID** da temperatura da água e **sensor ultrassônico** que verifica se há pó de café no filtro. O repositório traz o firmware, o esquemático e o projeto da placa de circuito impresso. Foi desenvolvido em equipe de quatro integrantes na disciplina de Sistemas Embarcados do curso de Engenharia Eletrônica da UTFPR, em 2022.
 
 > **English:** programmable coffee maker prototype built in a four-person team for the Embedded Systems course (UTFPR, 2022). Arduino Mega 2560 firmware with an RTC, PID water-temperature control through a solid-state relay, ultrasonic coffee-powder detection and an I2C LCD, plus schematic and PCB design in EasyEDA.
 
