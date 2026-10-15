@@ -100,6 +100,9 @@ O custo estimado de fabricação ficou em cerca de **R$ 188** por unidade, inclu
 - **Interrupção simulada.** A interrupção externa é disparada por um pulso gerado pelo próprio software em outro pino. Seria mais simples usar interrupção por mudança de pino (PCINT) direto nos botões.
 - **Leituras bloqueantes.** `pulseIn` sem tempo limite pode travar o laço principal se o sensor não responder.
 - **Função sem uso.** A rotina que apaga a luz de fundo do LCD está escrita, mas nunca é chamada.
+- **Entrada de 127 V na placa.** Nos testes de laboratório, a ponte retificadora era alimentada por um transformador de 127 V para 18 V. Esse transformador não entrou no esquemático da PCB, que liga o borne de 127 V direto na ponte e no regulador 7805. Eu incluiria o transformador, ou uma fonte isolada pronta, além de um fusível na entrada.
+- **Oscilador sem função.** A placa tem um cristal de 32,768 kHz ligado aos pinos 9 e 10 do Arduino, mas o firmware não usa esses pinos, e a hora vem do módulo RTC DS3231. Eu tiraria esse circuito da placa.
+- **Documentação da placa.** Os resistores dos LEDs aparecem no esquemático só como "R", sem valor, e alguns nomes de componentes se sobrepõem na serigrafia, perto de R3 e R6. Eu corrigiria antes de mandar fabricar.
 
 ---
 
