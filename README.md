@@ -83,7 +83,6 @@ O custo estimado de fabricação ficou em cerca de **R$ 188** por unidade, inclu
 | Caminho | Conteúdo |
 |---|---|
 | `Coffeteira/Coffeteira.ino` | Firmware completo |
-| `hardware/esquematico.pdf` | Esquemático em PDF |
 | `hardware/easyeda-projeto.zip` | Projeto do esquemático e da PCB no EasyEDA |
 | `hardware/gerber-pcb.zip` | Arquivos Gerber para fabricar a placa |
 
