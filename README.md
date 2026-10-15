@@ -17,21 +17,22 @@ Protótipo de uma cafeteira programável com **Arduino Mega 2560**, com relógio
 ### Fluxo de funcionamento
 
 ```mermaid
-flowchart TD
-    A([Cafeteira energizada]) --> B[Em espera]
-    B --> C{Botão Ligar}
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#eef3fb','primaryBorderColor':'#2f5597','primaryTextColor':'#1a1a1a','lineColor':'#2f5597','fontFamily':'Arial','fontSize':'15px','edgeLabelBackground':'#ffffff'}}}%%
+flowchart LR
+    A([Cafeteira<br/>energizada]) --> B[Em espera]
+    B --> C{Botão<br/>Ligar}
     C -->|1º toque| B
-    C -->|2º toque| D[Preparar agora]
-    C -->|3º toque| E[Preparar no horário programado]
-    E --> F{Chegou o horário<br/>programado?}
+    C -->|2º toque| D[Preparar<br/>agora]
+    C -->|3º toque| E[Preparar no<br/>horário programado]
+    E --> F{Chegou o<br/>horário?}
     F -->|Não| W[Aguarda]
     W --> F
     F -->|Sim| G
     D --> G{Há pó de café<br/>no filtro?}
-    G -->|Não| H[Acende o LED de aviso]
+    G -->|Não| H[Acende o<br/>LED de aviso]
     H --> G
-    G -->|Sim| I[Aquece a água com controle PID<br/>normal: 60 °C, forte: 80 °C]
-    I --> J[Preparo de 10 s]
+    G -->|Sim| I[Aquece a água com PID<br/>normal 60 °C, forte 80 °C]
+    I --> J[Preparo<br/>de 10 s]
     J --> B
 ```
 
